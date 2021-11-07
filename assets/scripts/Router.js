@@ -11,7 +11,7 @@
   *     easily modify the URL without refreshing the page or anything
   */
 
-export class Router {
+ export class Router {
   static routes = {};
 
   /**
@@ -21,6 +21,11 @@ export class Router {
    *                            visually
    */
   constructor(homeFunc) {
+    /**
+     * TODO Part 1
+     * Fill in this function as specified in the comment above
+     */
+
     this['home'] = homeFunc;
   }
 
@@ -38,7 +43,11 @@ export class Router {
      * router instance using the 'this' keyword. Substitute 'home' for the variable
      * page
      */
+    
+    this[page]=pageFunc;
+
   }
+
 
   /**
    * Changes the page visually to the page that has been passed in. statePopped
@@ -65,5 +74,29 @@ export class Router {
      *     and URL + hash to history
      *  4. Finally, call the stored function for the given page
      */
+
+    if(this[page] == 'undefined') {
+      console.log('no page exists');
+      return;
+    }
+
+    let hash;
+    if(page == 'home') {
+      hash = "";
+    }
+    else {
+      hash = '#' + page;
+    }
+
+    console.log('outside loop hash test' + window.location.hash);
+
+    if(statePopped == false && window.location.hash != hash) {
+      console.log('inloop hash value ' + hash);
+      history.pushState({'p': page}, '', window.location.origin + hash);
+      console.log('inside loop hash test' + window.location.hash);                          
+    }
+
+    this[page]();
+
   }
 }
